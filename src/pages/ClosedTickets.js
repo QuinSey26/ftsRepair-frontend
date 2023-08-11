@@ -12,7 +12,7 @@ const ClosedTickets = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch("/api/tickets/closed");
+        const response = await fetch("https://fts-repairs-backend.onrender.com/api/tickets/closed");
 
         if (!response.ok) {
           throw new Error("Failed to fetch tickets");

@@ -11,7 +11,7 @@ const OpenTickets = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch("/api/tickets/open");
+        const response = await fetch("https://fts-repairs-backend.onrender.com/api/tickets/open");
 
         if (!response.ok) {
           throw new Error("Failed to fetch tickets");
@@ -44,7 +44,7 @@ const OpenTickets = () => {
   // Handles the closing of a ticket.
   const handleCloseTicket = async (ticketId) => {
     try {
-      const response = await fetch(`/api/tickets/${ticketId}`, {
+      const response = await fetch(`https://fts-repairs-backend.onrender.com/api/tickets/${ticketId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

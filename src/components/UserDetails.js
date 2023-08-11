@@ -12,7 +12,7 @@ const UserDetails = () => {
 
   // Fetch users data from API on component mount
   useEffect(() => {
-    fetch("/api/users")
+    fetch("https://fts-repairs-backend.onrender.com/api/users")
       .then((response) => response.json())
       .then((data) => setUsers(data))
       .catch((error) => console.error(error));
