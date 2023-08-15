@@ -292,7 +292,7 @@ form.add {
 
 /* FTS */
 .fts {
-  height: 80px;
+  height: 75px;
   margin-left: 50px;
 }
 
@@ -310,10 +310,10 @@ nav a {
   background-color: #555;
   border-radius: 10px;
   color: aliceblue;
-  padding: 5px;
+  padding: 4px;
   border-style: solid;
   border-color: #e01f11;
-  border-width: 2px;
+  border-width: 1.8px;
 }
 
 /* Navigation */

@@ -1,12 +1,15 @@
 import { useState } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { TicketContext } from "../context/TicketContext";
+import { useContext } from "react";
 
-// Component for displaying ticket details and allowing editing.
+// Component for displaying ticket details and allowing editing and closing of the ticket.
 const TicketDetails = ({ ticket, handleCloseTicket }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTicket, setUpdatedTicket] = useState({ ...ticket });
+  const { setEditedTickets } = useContext(TicketContext);
 
-  // Event handler for input change.
+  // Handles the input change event and updates the corresponding field in the updated ticket state.
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUpdatedTicket((prevState) => ({
@@ -15,41 +18,66 @@ const TicketDetails = ({ ticket, handleCloseTicket }) => {
     }));
   };
 
-  // Event handler for editing the ticket.
+  // Sets the isEditing state to true, enabling the editing mode.
   const handleEdit = () => {
     setIsEditing(true);
   };
 
-  // Event handler for saving the updated ticket.
+  //  Handles the save action by sending an API request to update the ticket details.
+  // If successful, updates the state and adds the updated ticket to the edited tickets list.
+
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://fts-repairs-backend.onrender.com/api/tickets/${ticket._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedTicket),
-      });
+      const response = await fetch(
+        `https://fts-repairs-backend.onrender.com/api/tickets/${ticket._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedTicket),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update ticket");
       }
 
-      const updatedTicketData = await response.json();
-      setUpdatedTicket(updatedTicketData);
+      setUpdatedTicket(updatedTicket);
       setIsEditing(false);
 
+      setEditedTickets((prevEditedTickets) => [
+        ...prevEditedTickets,
+        updatedTicket,
+      ]);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // Event handler for closing the ticket.
-  const handleClose = () => {
-    handleCloseTicket(ticket._id);
+  // Handles the close action by sending an API request to update the ticket status to "closed".
+  // If successful, calls the handleCloseTicket function to remove the ticket from the list.
+  const handleClose = async () => {
+    try {
+      const response = await fetch(
+        `https://fts-repairs-backend.onrender.com/api/tickets/${ticket._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "closed" }),
+        }
+      );
 
-   
-   
+      if (!response.ok) {
+        throw new Error("Failed to close ticket");
+      }
+
+      handleCloseTicket(ticket._id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -74,26 +102,26 @@ const TicketDetails = ({ ticket, handleCloseTicket }) => {
         </div>
       ) : (
         <div className="ticket-details">
-          <h4>{ticket.title}</h4>
+          <h4>{updatedTicket.title}</h4>
           <p>
             <strong>Description: </strong>
-            {ticket.text}
+            {updatedTicket.text}
           </p>
           <p>
             <strong>Open/Close: </strong>
-            {ticket.status}
+            {updatedTicket.status}
           </p>
           <p>
             <strong>Technician: </strong>
-            {ticket.tech}
+            {updatedTicket.tech}
           </p>
           <p>
             <strong>Date Created: </strong>
-            {formatDistanceToNow(new Date(ticket.createdAt), {
+            {formatDistanceToNow(new Date(updatedTicket.createdAt), {
               addSuffix: true,
             })}
           </p>
-          {ticket.status === "open" && (
+          {updatedTicket.status === "open" && (
             <button className="close" onClick={handleClose}>
               Close
             </button>

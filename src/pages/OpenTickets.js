@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-
 import TicketDetails from "../components/TicketDetails";
 
 // Component to display open tickets and handle ticket updates
 const OpenTickets = () => {
-
   const [tickets, setTickets] = useState(null);
 
   // Fetches the open tickets from the server.
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch("https://fts-repairs-backend.onrender.com/api/tickets/open");
+        const response = await fetch(
+          "https://fts-repairs-backend.onrender.com/api/tickets/open"
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch tickets");
@@ -27,18 +27,19 @@ const OpenTickets = () => {
     fetchTickets();
   }, []);
 
-
-
   // Handles the closing of a ticket.
   const handleCloseTicket = async (ticketId) => {
     try {
-      const response = await fetch(`https://fts-repairs-backend.onrender.com/api/tickets/${ticketId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: "closed" }),
-      });
+      const response = await fetch(
+        `https://fts-repairs-backend.onrender.com/api/tickets/${ticketId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "closed" }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to close ticket");
