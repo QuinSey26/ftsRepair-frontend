@@ -16,7 +16,7 @@ const Signup = () => {
   const { signup, error, isLoading } = useSignup();
 
   // Navigation hook for redirecting after successful signup
-
+  const navigate = useNavigate();
 
   // Handle form submission.
   const handleSubmit = async (e) => {
@@ -35,6 +35,8 @@ const Signup = () => {
 
     // Call the signup function to register the user
     await signup(email, password, firstName, lastName, role);
+
+    navigate('/')
 
 
   };
@@ -71,10 +73,12 @@ const Signup = () => {
       />
 
       <label>Role:</label>
-      <select onChange={(e) => setRole(e.target.value)} value={role}>
-        <option value="Tech">Tech</option>
-        <option value="Admin">Admin</option>
-      </select>
+      <input
+        type="text"
+        onChange={(e) => setRole(e.target.value)}
+        value={role}
+        placeholder="Admin or Tech"
+      />
 
       {errorMessage && <div className="error">{errorMessage}</div>}
       <button disabled={isLoading}>Sign up</button>
