@@ -16,7 +16,7 @@ const Signup = () => {
   const { signup, error, isLoading } = useSignup();
 
   // Navigation hook for redirecting after successful signup
-  const navigate = useNavigate();
+
 
   // Handle form submission.
   const handleSubmit = async (e) => {
@@ -36,8 +36,7 @@ const Signup = () => {
     // Call the signup function to register the user
     await signup(email, password, firstName, lastName, role);
 
-    // Redirect to the home page after successful signup
-    navigate("/");
+
   };
 
   // Render the signup form

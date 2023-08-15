@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
   // Use the authReducer to manage the state
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
-    role: localStorage.getItem("role") || "Tech",
+    role: localStorage.getItem("role"),
   });
 
   // Load user data from local storage on component mount
