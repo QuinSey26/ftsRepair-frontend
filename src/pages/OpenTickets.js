@@ -32,7 +32,7 @@ const OpenTickets = () => {
   // Handles the closing of a ticket.
   const handleCloseTicket = async (ticketId) => {
     try {
-      const response = await fetch(`/api/tickets/${ticketId}`, {
+      const response = await fetch(`https://fts-repairs-backend.onrender.com/api/tickets/${ticketId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
