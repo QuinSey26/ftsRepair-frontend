@@ -15,7 +15,7 @@ const Home = () => {
     const fetchTotalOpenTickets = async () => {
       try {
         // Send a GET request to the "/api/tickets/open" endpoint
-        const response = await fetch("https://fts-repairs-backend.onrender.com/api/tickets/open");
+        const response = await fetch("/api/tickets/open");
 
         if (!response.ok) {
           throw new Error("Failed to fetch tickets");

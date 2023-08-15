@@ -3,7 +3,7 @@ import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 import fieldTyreServicesLogo from "../images/Logo.png";
-import fieldTyreServices from "../images/fieldtyreservices.png";
+import fieldTyreServices from "../images/field-tyre-services.png";
 
 // Navbar component displays the navigation bar at the top of the page.
 // It includes the logo, links to different pages, and user authentication options.

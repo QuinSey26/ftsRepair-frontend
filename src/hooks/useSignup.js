@@ -17,7 +17,7 @@ export const useSignup = () => {
     setError(null);
 
     // Send a POST request to the signup endpoint with user data
-    const response = await fetch("https://fts-repairs-backend.onrender.com/api/users/signup", {
+    const response = await fetch("/api/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, firstName, lastName, role }),

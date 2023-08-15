@@ -1,18 +1,18 @@
-import { useContext, useEffect, useState } from "react";
-import { WebSocketContext } from "../context/WebSocketContext";
+import { useEffect, useState } from "react";
+
 import TicketDetails from "../components/TicketDetails";
 
 
  // A React component that displays a list of closed tickets.
 const ClosedTickets = () => {
-  const webSocket = useContext(WebSocketContext);
+
   const [tickets, setTickets] = useState(null);
 
    // Fetches the closed tickets from the server.
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch("https://fts-repairs-backend.onrender.com/api/tickets/closed");
+        const response = await fetch("/api/tickets/closed");
 
         if (!response.ok) {
           throw new Error("Failed to fetch tickets");
@@ -29,19 +29,7 @@ const ClosedTickets = () => {
   }, []);
 
   
-   // Listens for updates from the WebSocket and updates the ticket list accordingly.
-  useEffect(() => {
-    if (webSocket && webSocket.socket) {
-      webSocket.socket.onmessage = (event) => {
-        const updatedTicket = JSON.parse(event.data);
-        setTickets((prevTickets) =>
-          prevTickets.map((ticket) =>
-            ticket._id === updatedTicket._id ? updatedTicket : ticket
-          )
-        );
-      };
-    }
-  }, [webSocket]);
+
 
   return (
     <div className="closed-tickets">

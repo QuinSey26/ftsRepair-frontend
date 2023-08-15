@@ -21,7 +21,7 @@ const TicketAddForm = () => {
     const ticket = { title, text, tech, status };
 
     // Send a POST request to the server to add the ticket
-    const response = await fetch("https://fts-repairs-backend.onrender.com/api/tickets", {
+    const response = await fetch("/api/tickets", {
       method: "POST",
       body: JSON.stringify(ticket),
       headers: {

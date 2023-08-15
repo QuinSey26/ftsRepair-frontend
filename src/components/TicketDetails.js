@@ -1,12 +1,10 @@
-import { useContext, useState } from "react";
-import { WebSocketContext } from "../context/WebSocketContext";
+import { useState } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 // Component for displaying ticket details and allowing editing.
 const TicketDetails = ({ ticket, handleCloseTicket }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTicket, setUpdatedTicket] = useState({ ...ticket });
-  const webSocket = useContext(WebSocketContext);
 
   // Event handler for input change.
   const handleInputChange = (e) => {
@@ -25,7 +23,7 @@ const TicketDetails = ({ ticket, handleCloseTicket }) => {
   // Event handler for saving the updated ticket.
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://fts-repairs-backend.onrender.com/api/tickets/${ticket._id}`, {
+      const response = await fetch(`/api/tickets/${ticket._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -41,11 +39,6 @@ const TicketDetails = ({ ticket, handleCloseTicket }) => {
       setUpdatedTicket(updatedTicketData);
       setIsEditing(false);
 
-      // Update the ticket in the WebSocket data as well
-      if (webSocket && webSocket.socket) {
-        const updatedTicketMessage = JSON.stringify(updatedTicketData);
-        webSocket.socket.send(updatedTicketMessage);
-      }
     } catch (error) {
       console.log(error);
     }
@@ -55,12 +48,8 @@ const TicketDetails = ({ ticket, handleCloseTicket }) => {
   const handleClose = () => {
     handleCloseTicket(ticket._id);
 
-    // Update the ticket status in the WebSocket data as well
-    const updatedTicketData = { ...ticket, status: "closed" };
-    if (webSocket && webSocket.socket) {
-      const updatedTicketMessage = JSON.stringify(updatedTicketData);
-      webSocket.socket.send(updatedTicketMessage);
-    }
+   
+   
   };
 
   return (
