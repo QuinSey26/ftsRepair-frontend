@@ -23,7 +23,7 @@ const TicketDetails = ({ ticket, handleCloseTicket }) => {
   // Event handler for saving the updated ticket.
   const handleSave = async () => {
     try {
-      const response = await fetch(`/api/tickets/${ticket._id}`, {
+      const response = await fetch(`https://fts-repairs-backend.onrender.com/api/tickets/${ticket._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

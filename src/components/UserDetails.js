@@ -31,7 +31,7 @@ const UserDetails = () => {
   const handleSaveEdit = (id) => {
     const updates = { firstName, lastName, role, active };
 
-    fetch(`/api/users/${id}`, {
+    fetch(`https://fts-repairs-backend.onrender.com/api/users/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updates),
@@ -58,7 +58,7 @@ const UserDetails = () => {
     );
 
     if (confirmed) {
-      fetch(`/api/users/${id}`, {
+      fetch(`https://fts-repairs-backend.onrender.com/api/users/${id}`, {
         method: "DELETE",
       })
         .then((response) => response.json())
